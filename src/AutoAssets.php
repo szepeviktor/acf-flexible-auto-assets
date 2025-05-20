@@ -2,10 +2,9 @@
 
 namespace SzepeViktor\WordPress\ACF\FlexibleAssets;
 
+use function get_field;
 use function get_field_objects;
-use function have_rows;
 use function is_single;
-use function the_row;
 use function sanitize_key;
 use function wp_enqueue_script;
 use function wp_enqueue_style;
@@ -14,7 +13,7 @@ use function wp_style_is;
 
 class AutoAssets
 {
-    public static function enqueue()
+    public static function enqueue(): void
     {
         if (!is_single()) {
             return;
@@ -33,7 +32,10 @@ class AutoAssets
         }
     }
 
-    public static function getBlocks()
+    /**
+     * @return list<string>
+     */
+    public static function getBlocks(): array
     {
         $fields = get_field_objects();
 
@@ -44,13 +46,25 @@ class AutoAssets
         $blocks = [];
 
         foreach ($fields as $field) {
+            /** @var array<string, string> $field */
             if ($field['type'] !== 'flexible_content') {
                 continue;
             }
 
-            while (have_rows($field['name'])) {
-                the_row();
-                $blocks[] = $field['label'].'_'.$field['name'];
+            // Don't use ACF loop
+            /** @var list<array<string, string>>|false $rows */
+            $rows = get_field($field['name']);
+
+            if (!is_array($rows)) {
+                continue;
+            }
+
+            foreach ($rows as $row) {
+                if (!isset($row['acf_fc_layout'])) {
+                    continue;
+                }
+
+                $blocks[] = $field['label'].'_'.$row['acf_fc_layout'];
             }
         }
 
