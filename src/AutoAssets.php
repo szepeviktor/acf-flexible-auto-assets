@@ -15,6 +15,9 @@ use function wp_style_is;
 
 class AutoAssets
 {
+    /** @var string */
+    public const HANDLE_PREFIX = 'acf_flex';
+
     public static function enqueue(): void
     {
         if (!is_single()) {
@@ -22,7 +25,7 @@ class AutoAssets
         }
 
         foreach (array_unique(static::getBlocks()) as $block) {
-            $assetHandle = sprintf('acf_flex_%s', sanitize_key($block));
+            $assetHandle = sprintf('%s_%s', static::HANDLE_PREFIX, sanitize_key($block));
 
             if (wp_style_is($assetHandle, 'registered')) {
                 wp_enqueue_style($assetHandle);
@@ -66,7 +69,7 @@ class AutoAssets
                     continue;
                 }
 
-                $blocks[] = $field['label'].'_'.$row['acf_fc_layout'];
+                $blocks[] = sprintf('%s_%s', $field['label'], $row['acf_fc_layout']);
             }
         }
 
