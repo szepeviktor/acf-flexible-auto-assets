@@ -6,8 +6,11 @@ use function get_field_objects;
 use function have_rows;
 use function is_single;
 use function the_row;
+use function sanitize_key;
 use function wp_enqueue_script;
 use function wp_enqueue_style;
+use function wp_script_is;
+use function wp_style_is;
 
 class AutoAssets
 {
@@ -17,9 +20,16 @@ class AutoAssets
             return;
         }
 
-        foreach (static::getBlocks() as $block) {
-            wp_enqueue_style($block);
-            wp_enqueue_script($block);
+        foreach (array_unique(static::getBlocks()) as $block) {
+            $assetHandle = sprintf('acf_flex_%s', sanitize_key($block));
+
+            if (wp_style_is($assetHandle, 'registered')) {
+                wp_enqueue_style($assetHandle);
+            }
+
+            if (wp_script_is($assetHandle, 'registered')) {
+                wp_enqueue_script($assetHandle);
+            }
         }
     }
 
