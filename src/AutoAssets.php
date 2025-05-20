@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SzepeViktor\WordPress\ACF\FlexibleAssets;
 
 use function get_field;
