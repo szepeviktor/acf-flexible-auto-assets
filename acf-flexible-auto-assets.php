@@ -26,7 +26,7 @@ require_once __DIR__.'/src/AutoAssets.php';
 add_action(
     'acf/init',
     static function () {
-        add_action('wp', [AutoAssets::class, 'enqueue'], 10, 0);
+        add_action('wp_enqueue_scripts', [AutoAssets::class, 'enqueue'], PHP_INT_MAX, 0);
     },
     10,
     0
