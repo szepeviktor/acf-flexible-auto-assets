@@ -20,7 +20,7 @@ class AutoAssets
 
     public static function enqueue(): void
     {
-        if (!is_single()) {
+        if (!is_singular()) {
             return;
         }
 
@@ -69,7 +69,7 @@ class AutoAssets
                     continue;
                 }
 
-                $blocks[] = sprintf('%s_%s', $field['label'], $row['acf_fc_layout']);
+                $blocks[] = sprintf('%s_%s', $field['name'], $row['acf_fc_layout']);
             }
         }
 
