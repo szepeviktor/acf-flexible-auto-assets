@@ -6,7 +6,7 @@ namespace SzepeViktor\WordPress\ACF\FlexibleAssets;
 
 use function get_field;
 use function get_field_objects;
-use function is_single;
+use function is_singular;
 use function sanitize_key;
 use function wp_enqueue_script;
 use function wp_enqueue_style;
