@@ -16,3 +16,19 @@ add_action('wp', function () {
     wp_register_style($handle, plugins_url('my-plugin/flex/the-block.css'), [], MY_PLUGIN_VERSION);
 });
 ```
+
+## Assets for template files
+
+```php
+<?php
+
+/*
+ * Template Name: My template
+ */
+
+wp_enqueue_style('my_css');
+wp_enqueue_script('my_javascript');
+get_header();
+
+?>
+```
