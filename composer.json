@@ -1,17 +1,18 @@
 {
     "name": "szepeviktor/acf-flexible-auto-assets",
     "description": "Automatically enqueue CSS and JavaScript files for ACF Flexible Content blocks",
-    "type": "wordpress-plugin",
-    "require": {
-        "php": ">=7.4"
-    },
     "license": "GPL-2.0-or-later",
+    "type": "wordpress-plugin",
     "authors": [
         {
             "name": "Viktor Szépe",
             "email": "viktor@szepe.net"
         }
     ],
+    "require": {
+        "php": ">=7.4",
+        "wpengine/advanced-custom-fields-pro": "^6.0"
+    },
     "require-dev": {
         "php-stubs/acf-pro-stubs": "^6.3",
         "szepeviktor/phpcs-psr-12-neutron-hybrid-ruleset": "^0.11.1",
