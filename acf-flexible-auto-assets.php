@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 use SzepeViktor\WordPress\ACF\FlexibleAssets\AutoAssets;
 
-require_once __DIR__.'/src/AutoAssets.php';
+require_once __DIR__ . '/src/AutoAssets.php';
 
 add_action(
     'acf/init',

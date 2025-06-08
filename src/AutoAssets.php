@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * AutoAssets
+ *
+ * phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
+ *
+ * @author Viktor Szépe <viktor@szepe.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPL-2.0-or-later
+ * @link https://github.com/szepeviktor/acf-flexible-auto-assets
+ */
+
 declare(strict_types=1);
 
 namespace SzepeViktor\WordPress\ACF\FlexibleAssets;
@@ -15,17 +25,20 @@ use function wp_style_is;
 
 class AutoAssets
 {
-    /** @var string */
     public const HANDLE_PREFIX = 'acf_flex';
 
     public static function enqueue(): void
     {
-        if (!is_singular()) {
+        if (! is_singular()) {
             return;
         }
 
         foreach (array_unique(static::getBlocks()) as $block) {
-            $assetHandle = sprintf('%s_%s', static::HANDLE_PREFIX, sanitize_key($block));
+            $assetHandle = sprintf(
+                '%s_%s',
+                self::HANDLE_PREFIX,
+                sanitize_key($block)
+            );
 
             if (wp_style_is($assetHandle, 'registered')) {
                 wp_enqueue_style($assetHandle);
@@ -44,28 +57,32 @@ class AutoAssets
     {
         $fields = get_field_objects();
 
-        if (!$fields) {
+        if (! $fields) {
             return [];
         }
 
         $blocks = [];
 
         foreach ($fields as $field) {
-            /** @var array<string, string> $field */
+            /**
+             * @var array<string, string> $field
+             */
             if ($field['type'] !== 'flexible_content') {
                 continue;
             }
 
             // Don't use ACF loop
-            /** @var list<array<string, string>>|false $rows */
+            /**
+             * @var list<array<string, string>>|false $rows
+             */
             $rows = get_field($field['name']);
 
-            if (!is_array($rows)) {
+            if (! is_array($rows)) {
                 continue;
             }
 
             foreach ($rows as $row) {
-                if (!isset($row['acf_fc_layout'])) {
+                if (! isset($row['acf_fc_layout'])) {
                     continue;
                 }
 
